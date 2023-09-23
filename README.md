@@ -1,6 +1,34 @@
 # 學習Git
 
-## 1. 安裝設定
+## 大綱  
+1. [安裝設定](#安裝設定)     
+2. [初始化與基本指令](#初始化與基本指令)     
+3. [Git branch 分支](#GitBranch分支)      
+    [誤刪分支怎麼辦](#誤刪分支怎麼辦)      
+4. [Git tag 標籤](#GitTag標籤)     
+5. [Git checkout 檢出](#GitCheckout檢出)        
+6. [Git reset 重置](#GitReset重置)       
+7. [Git revert 撤銷提交](#GitRevert撤銷提交)      
+8. [Git rebase 重新定義當前分支的參考基準](#GitRebase重新定義當前分支的參考基準)        
+9. [Git filterbranch 過濾Git數據庫中的提交歷史](#GitFilterbranch過濾git數據庫中的提交歷史)       
+    [❗移除數據庫中的敏感信息或不需要的文件](#移除數據庫中的敏感信息或不需要的文件)      
+10. [使用 遠端數據庫 (以github為例)](#使用遠端數據庫-以github為例)      
+    [新增遠端數據庫](#新增遠端數據庫)    
+    [將 本地專案 推送至 遠端數據庫](#將本地專案推送至遠端數據庫)       
+    [將 遠端數據庫 更新拉取至 本地端](#將遠端數據庫更新拉取至本地端)     
+    [從遠端複製數據庫到本地端](#從遠端複製數據庫到本地端)            
+    [Github－ 提出 Issue](#github－issue)
+    [Github－ Pull Request流程](#github－PR)       
+11. [Git-flow \ GitHub flow](#GitFlow)       
+12. [情境題](#情境題)       
+    [❗暫存進度](#暫存進度)    
+    [❗不小心把檔案刪掉了](#不小心把檔案刪掉了)        
+    [❗斷頭狀態+基於特定提交進行試驗和測試](#斷頭狀態基於特定提交進行試驗和測試)       
+- [參考資源](#參考資源)        
+
+
+## 1. 安裝設定<a name="安裝設定"></a>
+ 
 1. [安裝git與基本設定](./notes/ch1-InstallandConfig.md)
     - `$ git --version` 查詢 git 安裝版本
     - `$ git config --list --local\global` 視目前設定內容
@@ -9,7 +37,7 @@
     - Vim 編輯器(默認)
     - 以 VS Code 作為 Git 編輯器
 
-## 2. 初始化與基本指令
+## 2. 初始化與基本指令<a name="初始化與基本指令"></a>
 - [git基本指令](./notes/ch2-basicCommand.md)
     - `$ git init` git 數據庫初始化
     - `$ git add` 暫存變更 (移至 暫存區(Staging Area))
@@ -35,7 +63,7 @@
     .env
     ```
 
-## 3. Git branch 分支
+## 3. Git branch 分支<a name="GitBranch分支"></a>
 ```javascript
 $ git branch -a                  查看分支列表(包含遠端分支)
 $ git branch <branch-name>       創建分支
@@ -49,7 +77,7 @@ $ git merge <otherBranch-name>   合併分支
     2. 合併 B 分支 `$ git merge B` 
 ```
 - [常見的Git-Flow流程 - 分支合併以及合併衝突](./notes/ch3-merge.md)
-### 誤刪分支怎麼辦
+### 誤刪分支怎麼辦<a name="誤刪分支怎麼辦"></a>
 ```javascript
 專案中存在 A 和 B 兩個分支
 如果分支 A 上有三個提交 a1、a2、a3，當前 HEAD 指向最新的提交 a3，
@@ -62,7 +90,7 @@ $ git merge <otherBranch-name>   合併分支
 ```
 
 
-## 4. Git tag 標籤
+## 4. Git tag 標籤<a name="GitTag標籤"></a>
 在 Git 存儲庫中添加和管理標籤以標記重要的提交，版本號或發布點。
 ```javascript
 $ git tag <tag-name> <commit-hash>                  輕量標籤(lightweight tag)
@@ -84,7 +112,7 @@ $ git tag v2.0.0 as4a1d4 -a -m "Release version 2.0.0"
 $ git push origin <tag-name>                        將標籤推送到遠端數據庫
 ```
 
-## 5. Git checkout 檢出
+## 5. Git checkout 檢出<a name="GitCheckout檢出"></a>
 - 檢出(checkout)      
     - 檢出指的是從版本庫中獲取或查看特定的文件或提交狀態，並將其應用到工作目錄中，以便你可以查看、編輯或測試這些文件或 提交。
     - 不會影響原分支。
@@ -119,7 +147,7 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
 
 
 
-## 6. Git reset 重置
+## 6. Git reset 重置<a name="GitReset重置"></a>
 - 重置(reset)      
     - 移動目前分支的 HEAD 指標，從而影響了該分支的提交歷史。
     ```javascript
@@ -145,7 +173,7 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
     - reset 模式介紹
 
 
-## 7. Git revert 撤銷提交
+## 7. Git revert 撤銷提交<a name="GitRevert撤銷提交"></a>
 
 ```javascript
 如果分支 A 上有三個提交 a1 > a2 > a3，當前 HEAD 指向最新的提交 a3，
@@ -167,7 +195,7 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
 
     - 使用 git revert 時，即使你撤銷了一個錯誤的提交，其他人仍然可以保持他們的工作進度，不會受到太大干擾。這使得 git revert 成為一個更安全的選擇，當你需要回滾提交並且不希望對團隊成員產生太多干擾時。
 
-## 8. Git rebase 重新定義當前分支的參考基準
+## 8. Git rebase 重新定義當前分支的參考基準<a name="GitRebase重新定義當前分支的參考基準"></a>
 
 1. 以 `指定分支` 重新定義當前分支的參考基準 
     ```bash
@@ -199,7 +227,7 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
 
 
 
-## 9. Git filterbranch 過濾Git數據庫中的提交歷史
+## 9. Git filterbranch 過濾Git數據庫中的提交歷史<a name="GitFilterbranch過濾git數據庫中的提交歷史"></a>
 
 `$git filter-branch`指令 使用過濾操作對數據庫每個提交應用自定義的處理，包括：        
 1. 刪除或修改提交中的特定文件。
@@ -208,7 +236,7 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
 4. 合併或拆分提交。
 5. 重新排列提交的順序。
 
-### ❗移除數據庫中的敏感信息或不需要的文件
+### ❗移除數據庫中的敏感信息或不需要的文件<a name="移除數據庫中的敏感信息或不需要的文件"></a>
 
 1. 在所有提交歷史中刪除特定檔案 可復原
     ```bash
@@ -234,17 +262,17 @@ $ git push origin <tag-name>                        將標籤推送到遠端數�
     ```
 
 
-## 10. 使用 遠端數據庫 (以github為例)
+## 10. 使用 遠端數據庫 (以github為例)<a name="使用遠端數據庫-以github為例"></a>
 
 前往現有git工作目錄專案 (如果沒有的話要先開新目錄並git初始化)
 
-### 新增遠端數據庫
+### 新增遠端數據庫<a name="新增遠端數據庫"></a>
 ```bash
 # git remote add <remoteRepository-name> <remoteRepository-url> 
 $git remote add origin https://github.com/<your_github_id>/<github_repository-url>
 ```
 
-### 將 本地專案 推送至 遠端數據庫 
+### 將 本地專案 推送至 遠端數據庫 <a name="將本地專案推送至遠端數據庫"></a>
 
 根據要推送的分支修改&lt;localRepository-name>
 ```bash
@@ -262,7 +290,7 @@ $git push -u origin main
     $ git push origin --delete newfeature
     ```
 
-### 將 遠端數據庫 更新拉取至 本地端
+### 將 遠端數據庫 更新拉取至 本地端 <a name="將遠端數據庫更新拉取至本地端"></a>
 
 ```bash
 $git fetch origin           拉取遠端變更
@@ -274,7 +302,7 @@ $git pull origin main       拉取遠端變更並合併 ($git fetch + $git merge
 #說明:將遠端數據庫 origin 上的 main 分支最新變更拉取（下載）到本地分支，並自動合併這些變更到當前分支。
 ```
 
-### 從遠端複製數據庫到本地端
+### 從遠端複製數據庫到本地端 <a name="從遠端複製數據庫到本地端"></a>
 ```bash
 $git clone <remoteRepository-url> [<local-directory>] 
 #<repository-url> 是遠端 Git 存儲庫的 URL，可以是 HTTPS 或 SSH 協議。
@@ -282,14 +310,14 @@ $git clone <remoteRepository-url> [<local-directory>]
 #是克隆存儲庫後在本地創建的目錄名稱。如果不指定此參數將使用原名稱作為目錄名。
 ```
 
-### Github－ 提出 Issue
+### Github－ 提出 Issue <a name="github－issue"></a>
 GitHub 的 Issue 機制是一種用於追蹤、討論和解決專案中的任務、問題、建議和改進的功能，任何人都可以在 GitHub 上的儲存庫頁面上提出 Issue：
 1. 造訪數據庫頁面 點擊 "Issues"頁籤，點擊"New Issue"填寫問題資訊 。      
 2.  可以詳細描述問題的性質、復現步驟、期望行為等資訊，點擊"Submit new issue"將問題提交給儲存庫的維護者和其他社群成員。
 3.  一旦問題被提交，其他人就可以看到它並就與專案相關的問題進行溝通和討論，包括儲存庫的維護者。 
 
 
-### Github－ Pull Request流程
+### Github－ Pull Request流程 <a name="github－PR"></a>
 
 Pull Request（PR）機制是 GitHub 上開源專案的重要組成部分，      
 它使開發者能夠為開源專案貢獻新功能、修復錯誤和改進。
@@ -305,7 +333,7 @@ Pull Request（PR）機制是 GitHub 上開源專案的重要組成部分，
     一旦審查人員確認變更是安全且適當的，Pull Request 可以合併到目標專案的主分支。    
     一旦 Pull Request 被合併，通常會刪除與 PR 關聯的分支，有助於保持程式碼庫的乾淨和整潔。
 
-## 11.Git-flow \ GitHub flow
+## 11. Git-flow \ GitHub flow <a name="GitFlow"></a>
 
 ### Git-flow
 如果看完 [Git-Flow 基本教學 - 沈弘哲YT](https://www.youtube.com/watch?v=zXlta66thZY) 這部影片對 Git-flow 有基礎的了解，     
@@ -315,9 +343,9 @@ Pull Request（PR）機制是 GitHub 上開源專案的重要組成部分，
 六角學院的老師們GitHub flow模擬影片
 - [35 GitHub flow 線上三人實際演練 - 六角學院YT](https://www.youtube.com/watch?v=C_u6RLXixLY)
 
-## 12.情境題
+## 12. 情境題 <a name="情境題"></a>
 
-### ❗暫存進度        
+### ❗暫存進度 <a name="暫存進度"></a>         
 在分支 missionA 開發過程中 突然需要去修復 missionB分支      
 ```bash
 $git add --all
@@ -329,7 +357,7 @@ $git switch missionA
 $git reset HEAD^
 ```
 
-### ❗不小心把檔案刪掉了  
+### ❗不小心把檔案刪掉了 <a name="不小心把檔案刪掉了"></a>  
 
 在 Git 中，提交是一個非常重要的概念，只有提交後的更改才會被永久記錄下來。       
 如果某個文件在尚未提交的情況下被誤刪除，那麼復原時只能回復到最後一次提交的內容。      
@@ -364,7 +392,7 @@ Git 記錄的是每次提交的快照，因此未提交的更改不會被保存�
         git push -f
         ```
 
-### ❗斷頭狀態+基於特定提交進行試驗和測試
+### ❗斷頭狀態+基於特定提交進行試驗和測試 <a name="斷頭狀態基於特定提交進行試驗和測試"></a>
 1.  __斷頭狀態(detached HEAD)__     
     當使用 檢出指令 `$git checkout <commit-hash>` 查看 特定commit時，        
     會產生 斷頭(detached HEAD)狀態：   
@@ -413,7 +441,7 @@ Git 記錄的是每次提交的快照，因此未提交的更改不會被保存�
         
 
 
-## 參考資源
+## 參考資源 <a name="參考資源"></a>
 - [五倍紅寶石．高見龍 - 為你自己學 Git](https://www.tenlong.com.tw/products/9789864342662) 實體書
 - [高見龍 - Git 面試題](https://www.youtube.com/watch?v=YxLqRxF_moY&list=PLBd8JGCAcUAFe5uy3UzokJ-oIVQr1obl4)
 - [六角學院 - Git、GitHub 教學](https://www.youtube.com/watch?v=PNEM7CH3ZAg&list=PLYrA-SsMvTPOZeB6DHvB0ewl3miMf-2tj)

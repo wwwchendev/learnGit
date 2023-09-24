@@ -17,7 +17,7 @@
     [將 本地專案 推送至 遠端數據庫](#將本地專案推送至遠端數據庫)       
     [將 遠端數據庫 更新拉取至 本地端](#將遠端數據庫更新拉取至本地端)     
     [從遠端複製數據庫到本地端](#從遠端複製數據庫到本地端)            
-    [Github－ 提出 Issue](#github－issue)
+    [Github－ 提出 Issue](#github－issue)       
     [Github－ Pull Request流程](#github－PR)       
 11. [Git-flow \ GitHub flow](#GitFlow)       
 12. [情境題](#情境題)       

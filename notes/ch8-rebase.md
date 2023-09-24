@@ -113,7 +113,7 @@ $edit 9b459dc 建置html環境並修改title為首頁
 # 並讓我們進行編輯、修改提交或進行其他操作。
 pick 637f349 內容新增:歡迎來到我的網頁
 pick 570dfc4 新增圖片
-    ``` 
+``` 
 git-rebase-todo 保存關閉後，Git 會在達到該操作時停止 rebase，
 此時終端機出現下面訊息：
 ```bash        
